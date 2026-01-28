@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   // Register function
   const registerTutor = async (formData,otp) => {
     try {
-      const { data } = await axios.post("/auth/tutor-register",{ ...formData,otp});
+      const { data } = await axios.post("/tutor/auth/tutor-register",{ ...formData,otp});
 
       if (data.success) {
         setUser(data.user);
