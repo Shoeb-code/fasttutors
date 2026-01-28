@@ -50,22 +50,26 @@ function EditTutorProfile() {
     });
 
     setPreview(user.profilePhoto || null);
-  }, [user]);
+  }, [user, navigate]);
 
   const handleChange = (e) =>
     setEditForm({ ...editForm, [e.target.name]: e.target.value });
 
-  const wordCount = editForm.aboutTutor.trim().split(/\s+/).filter(Boolean).length;
+  const wordCount = editForm.aboutTutor
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+
   const isBioValid = wordCount >= 50;
 
   /* ================= UPDATE PROFILE ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isBioValid) return;
+    if (!isBioValid) return alert("Minimum 50 words required");
 
     try {
       const { data } = await axios.put(
-        "/tutor/auth/edit-profile", 
+        "/tutor/auth/edit-profile",
         editForm
       );
 
@@ -82,8 +86,11 @@ function EditTutorProfile() {
   /* ================= PHOTO ================= */
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
-    if (!file || !file.type.startsWith("image/")) return alert("Invalid image");
-    if (file.size > 10 * 1024 * 1024) return alert("Max 10MB allowed");
+    if (!file || !file.type.startsWith("image/"))
+      return alert("Invalid image file");
+    if (file.size > 10 * 1024 * 1024)
+      return alert("Max 10MB allowed");
+
     setProfilePhoto(file);
     setPreview(URL.createObjectURL(file));
   };
@@ -97,7 +104,7 @@ function EditTutorProfile() {
       fd.append("profilePhoto", profilePhoto);
 
       const { data } = await axios.put(
-        "/tutor/auth/update-photo",  
+        "/tutor/auth/update-photo",
         fd
       );
 
@@ -141,7 +148,12 @@ function EditTutorProfile() {
 
           <label className="text-sm text-amber-400 cursor-pointer mb-3">
             Change profile photo
-            <input type="file" hidden accept="image/*" onChange={handlePhotoChange} />
+            <input
+              type="file"
+              hidden
+              accept="image/*"
+              onChange={handlePhotoChange}
+            />
           </label>
 
           <motion.button
@@ -163,6 +175,12 @@ function EditTutorProfile() {
                 <Input label="WhatsApp Number" name="whatShap" value={editForm.whatShap} onChange={handleChange} />
                 <Input label="Mobile Number" name="mobile" value={editForm.mobile} onChange={handleChange} />
                 <Input label="City" name="city" value={editForm.city} onChange={handleChange} />
+
+                <Select label="Gender" name="gender" value={editForm.gender} onChange={handleChange} options={["Male", "Female", "Other"]} />
+                <Input label="Highest Qualification" name="highestQualification" value={editForm.highestQualification} onChange={handleChange} />
+                <Input label="Experience (Years)" name="experience" type="number" value={editForm.experience} onChange={handleChange} />
+                <Input label="Subject(s)" name="subject" value={editForm.subject} onChange={handleChange} />
+                <Select label="Mode of Teaching" name="modeOfTeaching" value={editForm.modeOfTeaching} onChange={handleChange} options={["Online", "Offline", "Both"]} />
               </TwoCol>
             </Section>
 
@@ -174,13 +192,16 @@ function EditTutorProfile() {
                 rows={6}
                 className="w-full rounded-2xl px-5 py-4 bg-neutral-800 border border-neutral-700 text-white"
               />
+              <p className={`text-sm ${isBioValid ? "text-green-400" : "text-red-400"}`}>
+                {wordCount}/50 words minimum
+              </p>
             </Section>
 
             <div className="flex justify-end">
               <button
                 type="submit"
                 disabled={!isBioValid}
-                className="px-10 py-4 rounded-xl bg-white text-black font-bold"
+                className="px-10 py-4 rounded-xl bg-white text-black font-bold disabled:opacity-50"
               >
                 Save Changes
               </button>
@@ -217,6 +238,25 @@ function Input({ label, ...props }) {
         {...props}
         className="w-full rounded-xl bg-neutral-800 border border-neutral-700 px-4 py-3 text-white"
       />
+    </div>
+  );
+}
+
+function Select({ label, options, ...props }) {
+  return (
+    <div className="space-y-1">
+      <label className="text-sm text-neutral-400">{label}</label>
+      <select
+        {...props}
+        className="w-full rounded-xl bg-neutral-800 border border-neutral-700 px-4 py-3 text-white"
+      >
+        <option value="">Select</option>
+        {options.map((opt) => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

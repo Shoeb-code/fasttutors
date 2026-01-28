@@ -12,6 +12,11 @@ import {
   MessageCircle,
   Coins,
   History,
+  MapPin,
+  GraduationCap,
+  Clock,
+  Laptop,
+  User,
 } from "lucide-react";
 
 import {
@@ -61,30 +66,24 @@ const TutorDashboard = () => {
   useEffect(() => {
     const token = getAccessToken();
     if (!user || !token) return;
-  
+
     const loadData = async () => {
       try {
-        await Promise.all([
-          fetchDashboard(),
-          fetchApplyHistory(),
-        ]);
+        await Promise.all([fetchDashboard(), fetchApplyHistory()]);
       } finally {
-        setLoading(false); // 🔥 THIS WAS MISSING
+        setLoading(false);
       }
     };
-  
+
     loadData();
   }, [user]);
 
   /* ================= SAVE DEMO VIDEO ================= */
   const saveDemoVideo = async () => {
     if (!demoVideo) return;
-
     try {
       const { data } = await axios.put("/tutor/demo-video", { demoVideo });
-      if (data.success) {
-        fetchDashboard();
-      }
+      if (data.success) fetchDashboard();
     } catch {
       alert("Failed to save demo video");
     }
@@ -120,21 +119,35 @@ const TutorDashboard = () => {
           </p>
         </div>
 
-        {/* PROFILE + COINS */}
+        {/* PROFILE CARD */}
         <Card>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+
             <img
               src={tutor.profilePhoto || "/default-avatar.png"}
-              className="w-24 h-24 rounded-full border border-white/10"
+              className="w-28 h-28 rounded-full border border-white/10"
             />
 
             <div className="flex-1">
               <h2 className="text-2xl font-semibold">
                 {tutor.firstName} {tutor.lastName}
               </h2>
-              <p className="text-gray-400">{tutor.subject}</p>
 
-              <div className="flex gap-3 mt-3">
+              <p className="text-gray-400 mt-1">
+                {tutor.subject} Tutor
+              </p>
+
+              {/* DETAILS */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4 text-sm">
+                <Detail icon={<MapPin />} label="City" value={tutor.city || "—"} />
+                <Detail icon={<Clock />} label="Experience" value={`${tutor.experience || 0} yrs`} />
+                <Detail icon={<Laptop />} label="Mode" value={tutor.modeOfTeaching || "—"} />
+                <Detail icon={<GraduationCap />} label="Qualification" value={tutor.highestQualification || "—"} />
+                <Detail icon={<User />} label="Gender" value={tutor.gender || "—"} />
+              </div>
+
+              {/* BADGES */}
+              <div className="flex gap-3 mt-4">
                 {tutor.badges?.verified && (
                   <Badge icon={<BadgeCheck />} label="Verified" />
                 )}
@@ -144,6 +157,7 @@ const TutorDashboard = () => {
               </div>
             </div>
 
+            {/* COINS */}
             <div className="text-right">
               <p className="text-sm text-gray-300">Coins Balance</p>
               <p className="text-3xl font-extrabold text-amber-400 flex items-center gap-2">
@@ -158,11 +172,6 @@ const TutorDashboard = () => {
             </div>
           </div>
         </Card>
-
-
-
-
-
 
         {/* STATS */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -190,12 +199,7 @@ const TutorDashboard = () => {
                     <XAxis dataKey="month" stroke="#888" />
                     <YAxis stroke="#888" />
                     <Tooltip />
-                    <Line
-                      type="monotone"
-                      dataKey="amount"
-                      stroke="#6366f1"
-                      strokeWidth={3}
-                    />
+                    <Line type="monotone" dataKey="amount" stroke="#6366f1" strokeWidth={3} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -212,8 +216,6 @@ const TutorDashboard = () => {
               ))}
             </Card>
 
-
-
             {/* DEMO VIDEO */}
             <Card>
               <SectionTitle icon="🎥" text="Demo Teaching Video" />
@@ -225,7 +227,7 @@ const TutorDashboard = () => {
               />
               <button
                 onClick={saveDemoVideo}
-                className="mt-3 px-5 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600"
+                className="mt-3 px-5 py-2 rounded-xl bg-indigo-500"
               >
                 Save Video
               </button>
@@ -243,7 +245,8 @@ const TutorDashboard = () => {
           {/* RIGHT */}
           <div className="space-y-8">
 
-          <Card>
+            {/* APPLY HISTORY */}
+            <Card>
   <SectionTitle icon={<History />} text="Tuition Apply History" />
 
   {applyHistory.length === 0 ? (
@@ -305,7 +308,6 @@ const TutorDashboard = () => {
 </Card>
 
 
-
             {/* CHAT */}
             <Card>
               <SectionTitle icon={<MessageCircle />} text="Student Chats" />
@@ -329,13 +331,13 @@ export default TutorDashboard;
 /* ================= UI HELPERS ================= */
 
 const Card = ({ children }) => (
-  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
     {children}
   </div>
 );
 
 const Stat = ({ icon, label, value }) => (
-  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 flex gap-4">
+  <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex gap-4">
     <div className="text-indigo-400">{icon}</div>
     <div>
       <p className="text-gray-400 text-sm">{label}</p>
@@ -350,16 +352,22 @@ const Badge = ({ icon, label }) => (
   </span>
 );
 
+const Detail = ({ icon, label, value }) => (
+  <div className="flex items-center gap-2 text-gray-300">
+    <span className="text-indigo-400">{icon}</span>
+    <span>{label}: <b className="text-white">{value}</b></span>
+  </div>
+);
+
+const Info = ({ label, value }) => (
+  <div className="bg-white/5 rounded-lg px-3 py-2">
+    <p className="text-xs text-gray-400">{label}</p>
+    <p className="text-sm font-medium text-white">{value}</p>
+  </div>
+);
+
 const SectionTitle = ({ icon, text }) => (
   <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-indigo-300">
     {icon} {text}
   </h3>
-);
-const Info = ({ label, value }) => (
-  <div className="bg-white/5 rounded-lg px-3 py-2">
-    <p className="text-xs text-gray-400">{label}</p>
-    <p className="text-sm text-white font-medium">
-      {value}
-    </p>
-  </div>
 );
