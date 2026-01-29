@@ -9,6 +9,9 @@ import {
   MapPin,
   MessageCircle,
   Calendar,
+  Brain,
+ 
+  GraduationCap,
 } from "lucide-react";
 
 /* ===================================================== */
@@ -107,10 +110,19 @@ const TutorPublicProfile = () => {
               {tutor.firstName} {tutor.lastName}
             </h1>
 
+
+            
+
             <p className="text-gray-400 mt-2 flex items-center gap-2 text-lg">
-              <BookOpen size={18} /> {tutor.subject}
+              <BookOpen size={18} />{tutor.subject}
               <span className="mx-2">•</span>
               <MapPin size={18} /> {tutor.city}
+
+              <span className="mx-2">•</span>
+              <Brain size={18}/>{tutor.experience}+  years
+
+              <span className="mx-2">•</span>
+              <GraduationCap size={18} /> {tutor.highestQualification}
             </p>
 
             <div className="flex items-center gap-4 mt-4">

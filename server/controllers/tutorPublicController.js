@@ -3,13 +3,14 @@ import QuestionLog from "../models/QuestionLog.js";
 
 export const getPublicTutorProfile = async (req, res) => {
   try {
+   
     const tutor = await Tutor.findById(req.params.tutorId).select("-password");
 
     if (!tutor) {
       return res.status(404).json({ success: false });
     }
 
-    const questions = await QuestionLog.find({ tutorId: tutor._id });
+    const questions = await QuestionLog.find({tutorId:tutor._id });
 
     const totalQuestions = questions.reduce(
       (sum, q) => sum + q.count,
