@@ -22,7 +22,7 @@ export const getTutorDashboard = async (req, res) => {
 
     res.json({
       success: true,
-      tutor: req.user,
+      tutor:req.user,
       earnings,
       schedule,
       questions,

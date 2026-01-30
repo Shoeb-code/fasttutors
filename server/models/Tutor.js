@@ -21,6 +21,7 @@ const tutorSchema = new mongoose.Schema({
     role:String,
     tutorLocation:String,
     modeOfTeaching:String,
+    studentYouTeach:Number,
     profileCompleted:Boolean,
     coins: {
         type: Number,

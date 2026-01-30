@@ -17,6 +17,7 @@ function EditTutorProfile() {
     lastName: "",
     whatShap: "",
     mobile: "",
+    studentYouTeach:"",
     city: "",
     gender: "",
     highestQualification: "",
@@ -41,6 +42,7 @@ function EditTutorProfile() {
       mobile: user.mobile || "",
       city: user.city || "",
       gender: user.gender || "",
+      studentYouTeach: user.studentYouTeach || 0,
       highestQualification: user.highestQualification || "",
       experience: user.experience || "",
       subject: user.subject || "",
@@ -173,7 +175,9 @@ function EditTutorProfile() {
                 <Input label="First Name" name="firstName" value={editForm.firstName} onChange={handleChange} />
                 <Input label="Last Name" name="lastName" value={editForm.lastName} onChange={handleChange} />
                 <Input label="WhatsApp Number" name="whatShap" value={editForm.whatShap} onChange={handleChange} />
+                
                 <Input label="Mobile Number" name="mobile" value={editForm.mobile} onChange={handleChange} />
+                <Input type="number" label="Number of Students you Teach " name="studentYouTeach" value={editForm.studentYouTeach} onChange={handleChange} />
                 <Input label="City" name="city" value={editForm.city} onChange={handleChange} />
 
                 <Select label="Gender" name="gender" value={editForm.gender} onChange={handleChange} options={["Male", "Female", "Other"]} />

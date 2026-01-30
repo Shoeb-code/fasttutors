@@ -175,7 +175,7 @@ const TutorDashboard = () => {
 
         {/* STATS */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <Stat icon={<Users />} label="Students" value={schedule.length} />
+          <Stat icon={<Users />} label="Students I teach" value={tutor.studentYouTeach} />
           <Stat
             icon={<BookOpen />}
             label="Questions Solved"

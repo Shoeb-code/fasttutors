@@ -12,10 +12,7 @@ export const getPublicTutorProfile = async (req, res) => {
 
     const questions = await QuestionLog.find({tutorId:tutor._id });
 
-    const totalQuestions = questions.reduce(
-      (sum, q) => sum + q.count,
-      0
-    );
+    const totalQuestions = questions.reduce((sum, q) => sum + q.count,0);
 
     res.json({
       success: true,

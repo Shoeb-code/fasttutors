@@ -67,9 +67,8 @@ const TutorPublicProfile = () => {
   const handleDeleteReview = async (reviewId) => {
     if (!window.confirm("Delete this review?")) return;
     try {
-      await axios.delete(`/reviews/${reviewId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(`/reviews/${reviewId}`,
+        );
       setReviews((prev) => prev.filter((r) => r._id !== reviewId));
     } catch {
       alert("Failed to delete review");
@@ -231,7 +230,7 @@ const TutorPublicProfile = () => {
                   <p className="text-xs text-gray-500 mt-3">
                     {new Date(r.createdAt).toLocaleDateString()}
                   </p>
-
+                  
                   {parentId === r.parentId && (
                     <div className="flex gap-3 mt-4 text-sm">
                       <button
@@ -248,6 +247,9 @@ const TutorPublicProfile = () => {
                       </button>
                     </div>
                   )}
+
+
+                  
                 </div>
               ))}
             </div>

@@ -184,13 +184,13 @@ tutorRouter.put("/edit-profile",protectTutor, async (req, res) => {
 
         return res.json({ success: false, message: "Only tutors can update profile" });
   
-      const { firstName,lastName,subject,whatShap,mobile,dob,city,gender,pinCode,highestQualification,experience,address,aboutTutor,tutorLocation,modeOfTeaching} = req.body;
+      const { firstName,lastName,subject,whatShap,mobile,dob,city,gender,pinCode,highestQualification,experience,address,aboutTutor,tutorLocation,modeOfTeaching,studentYouTeach } = req.body;
 
       
        
       const updatedTutor = await Tutor.findByIdAndUpdate(
         req.user._id,
-        {firstName,lastName,whatShap,mobile,dob,subject,city,gender,pinCode,highestQualification,experience,address,aboutTutor,tutorLocation,modeOfTeaching,},
+        {firstName,lastName,whatShap,mobile,dob,subject,city,gender,pinCode,highestQualification,experience,address,aboutTutor,tutorLocation,modeOfTeaching,studentYouTeach},
         { new: true }
       );
   
