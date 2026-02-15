@@ -30,6 +30,10 @@ import EditTutorProfile from "./pages/Tutor/EditTutorProfile.jsx";
 import SearchTutors from "./pages//SearchTutors.jsx";
 import TutorPublicProfile from "./pages/TutorPublicProfile.jsx";
 import BuyCoins from "./pages/Tutor/BuyCoins.jsx";
+import TutorApplyHistory from "./pages/Tutor/TutorApplyHistory.jsx";
+
+import StudyMaterialSubjects from "./pages/StudyMaterial/StudyMaterialSubjects.jsx";
+import StudyMaterialContent from "./pages/StudyMaterial/StudyMaterialContent.jsx";
 
 function App() {
 
@@ -39,6 +43,8 @@ function App() {
       <AuthParent>
         <Router>
           <Navbar />
+
+
 
 
           <Toaster
@@ -54,6 +60,8 @@ function App() {
         }}
       />
 
+      
+
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
@@ -61,7 +69,7 @@ function App() {
             <Route path="/parent-register" element={<ParentPost />} />
             <Route path="/tutor-login" element={<LoginTutor />} />
             <Route path="/parent-login" element={<LoginStudent />} />
-
+      
            
 
             <Route path="/learn-more" element={<Learnmore />} />
@@ -107,6 +115,17 @@ function App() {
               }
             />
 
+           <Route
+              path="/tutor/applied-tuittions"
+              element={
+                <PrivateRoute role="tutor">
+                  <TutorApplyHistory/>
+                </PrivateRoute>
+              }
+            />
+
+
+
             <Route
               path="/tutor/tuitions-post"
               element={
@@ -129,6 +148,18 @@ function App() {
 
 
 <Route path="/tutor/profile/:tutorId" element={<TutorPublicProfile />} />
+
+
+  <Route path="/study-materials" element={<StudyMaterialSubjects/>} />
+
+  <Route
+  path="/study-materials/:className/:subject"
+  element={<StudyMaterialContent />}
+/>
+
+
+
+
           </Routes>
         </Router>
       </AuthParent>

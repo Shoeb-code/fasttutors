@@ -23,6 +23,7 @@ export const getTutorApplyHistory = async (req, res) => {
     const history = applies
       .filter(a => a.tuitionId) // avoid deleted tuitions
       .map(a => ({
+        _id: a._id, 
         subject: a.tuitionId.subject,
         studentClass: a.tuitionId.studentClass,
         coinCost: a.tuitionId.coinCost,

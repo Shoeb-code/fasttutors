@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { UserStar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FcReadingEbook } from "react-icons/fc";
+import { AuthContext } from "../../context/AuthContextTutor";
+import { AuthContextParent } from "../../context/AuthParent";
 
 function StudentAndTeacher() {
+
+   const {user}  =useContext(AuthContext);
+   const {parentUser} =useContext(AuthContextParent);
+
   return (
     <section className="bg-gradient-to-br from-black via-gray-950 to-gray-900
                         text-white px-6 py-20 rounded-3xl m-4">
@@ -36,7 +42,9 @@ function StudentAndTeacher() {
             by teaching subjects you love.
           </p>
 
-          <Link
+
+
+      <Link
             to="/tutor-register"
             className="px-8 py-3 rounded-xl
                        bg-gradient-to-r from-green-500 to-emerald-600
@@ -44,7 +52,8 @@ function StudentAndTeacher() {
                        hover:scale-[1.05] transition"
           >
             Become a Tutor →
-          </Link>
+          </Link> 
+          
         </div>
 
         {/* Student Card */}

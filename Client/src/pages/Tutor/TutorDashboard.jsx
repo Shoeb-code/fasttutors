@@ -165,7 +165,7 @@ const TutorDashboard = () => {
               </p>
               <button
                 onClick={() => navigate("/tutor/buy-coins")}
-                className="mt-2 px-4 py-2 bg-amber-500 text-black rounded-xl"
+                className="mt-2 px-4 py-2 hover:bg-amber-500 text-amber-50 bg-amber-800 rounded-xl"
               >
                 Buy Coins
               </button>
@@ -255,7 +255,7 @@ const TutorDashboard = () => {
     </p>
   ) : (
     <div className="space-y-4 max-h-[420px] overflow-y-auto pr-1">
-      {applyHistory.map((h, i) => (
+      {applyHistory.slice(0, 3).map((h, i) => (
         <div
           key={i}
           className="rounded-xl border border-white/10

@@ -48,14 +48,16 @@ const LandingPage = () => {
                 Find a Tutor
               </Link>
 
-              <Link
+            
+            { !user  && (<Link
                 to="/tutor-register"
                 className="px-8 py-4 rounded-xl
                            border border-white/20 text-white
                            hover:bg-white/10 transition"
               >
                 Become a Tutor
-              </Link>
+              </Link>) }
+              
             </div>
           )}
         </div>
@@ -84,7 +86,7 @@ const LandingPage = () => {
       <BestAchievment />
 
       {/* ================= STUDENT / TEACHER CTA ================= */}
-      <StudentAndTeacher />
+       {!user && !parentUser &&  (<StudentAndTeacher />)} 
 
       {/* ================= TESTIMONIALS ================= */}
       <InfoSection />
@@ -101,7 +103,7 @@ const LandingPage = () => {
             </p>
 
             <Link
-              to="/register"
+              to="/parent-register"
               className="inline-block px-10 py-4 rounded-xl
                          bg-amber-400 text-black
                          font-bold text-lg

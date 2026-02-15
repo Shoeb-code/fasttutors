@@ -19,6 +19,9 @@ import applyRouter from "./routes/applyTuitions.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import requestAuth from "./routes/requestAuth.js";
 
+
+import studyMaterialRoutes from "./module/studyMaterial/studyMaterial.routes.js";
+
 const app = express();
 
 /* ================= MIDDLEWARE ================= */
@@ -64,6 +67,10 @@ app.use("/api/tutor", tutorPublicRoutes);
 app.use("/api/reviews", reviewRoutes);
 
 app.use("/api", requestAuth);
+
+
+
+app.use("/api/study-materials", studyMaterialRoutes);
 
 /* ================= DB ================= */
 

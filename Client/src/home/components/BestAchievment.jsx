@@ -1,55 +1,147 @@
-import React from 'react'
-import { assets } from '../../assets/assets'
+import React, { memo } from "react";
+import { assets } from "../../assets/assets";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { GoTrophy } from "react-icons/go";
 import { TbDeviceIpadSearch } from "react-icons/tb";
+import { motion } from "framer-motion";
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 25 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45 } }
+};
 
 function BestAchievment() {
+  const stats = [
+    {
+      icon: <FaChalkboardTeacher className="text-amber-400 text-4xl" />,
+      value: "48000+",
+      label: "Expert Tutors"
+    },
+    {
+      icon: <GoTrophy className="text-emerald-400 text-4xl" />,
+      value: "21000+",
+      label: "Total Students"
+    },
+    {
+      icon: <TbDeviceIpadSearch className="text-sky-400 text-4xl" />,
+      value: "28000+",
+      label: "Enquiry Served"
+    }
+  ];
+
   return (
-    <div className='bg-gray-950 border-2 m-5 rounded-2xl'>
-         <div className='flex    border-amber rounded-2xl m-3 p-3'>
-            <div className='text-white m-4 p-4 space-y-6 w-[50%] items-center ' >
-                <h1 className='text-3xl font-bold '>Our Best Achievements</h1>
-                <ul className='space-y-4 text-[16px] p-3 bg-gray-900  rounded-2xl text-gray-300'>
-                  <li>1. Growing User base: It demonstrates the faith of Students and teachers in our credible Services.
-                </li>
-                <li>2. Successful Tutor-Student Matches: It shows our ability as a bridge to fulfill the requirements of both the students and the teachers.
-                </li>
-                <li>3. Positive Feedback and Testimonials: It reflects tutoring services' quality and builds trust in our services.
-                </li>
-                <li>
-                4. Improved Academic Performance: Highlights success stories and showcase tangible results that are compelling for potential users.
-                </li>
-                </ul>
-            </div>
-            {/* image section */}
-            <div className=' p-2  '>
-                 <img src={assets.boy} alt="img" className='h-[350px]   rounded-2xl ' />
-            </div>
-         </div>
-         <div className=' flex m-3 p-2 justify-center gap-48 items-center'>
-            <div className='  bg-gray-900 m-2 p-5 w-2xs flex items-center  text-center rounded-2xl gap-10'>
-              <FaChalkboardTeacher className='text-amber-400 text-5xl  flex flex-wrap' />
-              <div ><h1 className='font-bold text-2xl text-amber-50'>48000+</h1>
-                  <h2 className='text-white text-[20px]'>Expert Tutors</h2></div>
-            </div>
+    <section
+      className="
+      relative overflow-hidden
+      bg-gradient-to-br from-[#0a0a0a] via-[#0f1115] to-[#111827]
+      rounded-3xl
+      m-6 p-6 md:p-10
+      text-white
+      shadow-[0_0_60px_rgba(0,0,0,0.5)]
+    "
+    >
+      {/* soft glow background */}
+      <div className="absolute -right-32 -top-32 w-96 h-96 bg-amber-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-            <div className='bg-gray-900 m-2 p-5 w-2xs flex items-center  text-center rounded-2xl gap-10'>
-              <GoTrophy  className='text-green-500 text-5xl flex' />
-              <div ><h1 className='font-bold text-2xl text-amber-50'>21000+</h1>
-                  <h2 className='text-white text-[20px]'>Total Students</h2></div>
-            </div>
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="max-w-7xl mx-auto space-y-12"
+      >
+        {/* TOP CONTENT */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* TEXT */}
+          <motion.div variants={item} className="space-y-6">
+            <h1 className="text-3xl md:text-4xl font-bold">
+              Our Best Achievements
+            </h1>
 
-            <div className='bg-gray-900 m-2 p-5 w-2xs flex items-center  text-center rounded-2xl gap-10'>
-              <TbDeviceIpadSearch  className='text-blue-500 text-5xl flex' />
-              <div ><h1 className='font-bold text-2xl text-amber-50'>28000+</h1>
-                  <h2 className='text-white text-[20px]'>Enquiry Served</h2></div>
-            </div>
+            <ul className="space-y-4 text-[16px] p-6 bg-white/5 backdrop-blur-xl rounded-2xl text-gray-300">
+              <li>
+                1. Growing User base: Demonstrates the faith of students and
+                teachers in our credible services.
+              </li>
+              <li>
+                2. Successful Tutor-Student Matches: Shows our ability to bridge
+                student and tutor needs.
+              </li>
+              <li>
+                3. Positive Feedback and Testimonials: Reflects tutoring quality
+                and builds trust.
+              </li>
+              <li>
+                4. Improved Academic Performance: Showcases real success stories
+                with tangible results.
+              </li>
+            </ul>
+          </motion.div>
 
-         </div>
-    </div>
-  )
+          {/* IMAGE */}
+          <motion.div
+            variants={item}
+            className="flex justify-center"
+          >
+            <img
+              loading="lazy"
+              src={assets.boy}
+              alt="student learning"
+              className="
+              h-[320px] md:h-[360px]
+              rounded-3xl
+              shadow-2xl
+              border border-white/10
+              hover:scale-[1.02]
+              transition duration-500
+            "
+            />
+          </motion.div>
+        </div>
+
+        {/* STATS SECTION */}
+        <motion.div
+          variants={container}
+          className="
+          grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3
+          gap-6
+        "
+        >
+          {stats.map((s, i) => (
+            <motion.div
+              key={i}
+              variants={item}
+              className="
+              bg-white/5 backdrop-blur-xl
+              p-6 rounded-2xl
+              flex items-center gap-5
+              hover:bg-white/10
+              transition-all duration-300
+            "
+            >
+              {s.icon}
+              <div>
+                <h1 className="font-bold text-2xl text-white">
+                  {s.value}
+                </h1>
+                <h2 className="text-gray-300 text-lg">
+                  {s.label}
+                </h2>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
+    </section>
+  );
 }
 
-export default BestAchievment
+export default memo(BestAchievment);
