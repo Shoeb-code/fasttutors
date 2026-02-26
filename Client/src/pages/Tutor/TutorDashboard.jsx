@@ -1,373 +1,274 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "../../axiosConfig.js";
 import { AuthContext } from "../../context/AuthContextTutor.jsx";
-import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../../utils/tokenService.js";
 
 import {
-  Users,
-  BookOpen,
-  BadgeCheck,
-  Trophy,
-  MessageCircle,
-  Coins,
-  History,
-  MapPin,
-  GraduationCap,
-  Clock,
-  Laptop,
   User,
+  LayoutDashboard,
+  Wallet,
+  GraduationCap,
+  Briefcase,
+  BookOpen,
+  Sparkles
 } from "lucide-react";
 
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+/* ===================================================
+   🦄 UNICORN v6 — SAAS DASHBOARD LAYOUT
+=================================================== */
 
-const TutorDashboard = () => {
-  const navigate = useNavigate();
+export default function TutorDashboard() {
+
   const { user } = useContext(AuthContext);
 
-  const [dashboard, setDashboard] = useState(null);
-  const [applyHistory, setApplyHistory] = useState([]);
-  const [demoVideo, setDemoVideo] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [dashboard,setDashboard] = useState(null);
+  const [loading,setLoading] = useState(true);
 
-  /* ================= FETCH DASHBOARD ================= */
-  const fetchDashboard = async () => {
-    try {
-      const { data } = await axios.get("/tutor/dashboard");
-      if (data.success) {
-        setDashboard(data);
-        setDemoVideo(data.tutor?.demoVideo || "");
-      }
-    } catch (err) {
-      console.error("Dashboard error:", err);
-    }
-  };
+  /* ================= FETCH ================= */
 
-  /* ================= FETCH APPLY HISTORY ================= */
-  const fetchApplyHistory = async () => {
-    try {
-      const { data } = await axios.get("/tutor/apply-history");
-      if (data.success) {
-        setApplyHistory(data.history);
-      }
-    } catch (err) {
-      console.error("Apply history error:", err);
-    }
-  };
+  useEffect(()=>{
+    const load = async()=>{
+      try{
+        const token = getAccessToken();
+        if(!user || !token) return;
 
-  /* ================= ON LOAD ================= */
-  useEffect(() => {
-    const token = getAccessToken();
-    if (!user || !token) return;
+        const {data} = await axios.get("/tutor/dashboard");
 
-    const loadData = async () => {
-      try {
-        await Promise.all([fetchDashboard(), fetchApplyHistory()]);
-      } finally {
+        if(data.success){
+          setDashboard(data);
+        }
+      }catch(err){
+        console.log(err);
+      }finally{
         setLoading(false);
       }
     };
 
-    loadData();
-  }, [user]);
+    load();
+  },[user]);
 
-  /* ================= SAVE DEMO VIDEO ================= */
-  const saveDemoVideo = async () => {
-    if (!demoVideo) return;
-    try {
-      const { data } = await axios.put("/tutor/demo-video", { demoVideo });
-      if (data.success) fetchDashboard();
-    } catch {
-      alert("Failed to save demo video");
-    }
-  };
+  const tutor = dashboard?.tutor || {};
 
-  if (loading || !dashboard) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-white">
+  if(loading || !dashboard){
+    return(
+      <div className="min-h-screen flex items-center justify-center text-white text-lg">
         Loading dashboard...
       </div>
     );
   }
 
-  const {
-    tutor,
-    earnings = [],
-    schedule = [],
-    questions = [],
-    chats = [],
-  } = dashboard;
+  /* ===================================================
+     🧠 MAIN UI
+  =================================================== */
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900 px-4 py-12 text-white">
-      <div className="max-w-7xl mx-auto space-y-10">
+  return(
+    <div className="min-h-screen bg-black text-white flex">
 
-        {/* HEADER */}
-        <div>
-          <h1 className="text-4xl font-extrabold text-indigo-400">
+     
+
+     
+
+      {/* ===================================================
+          📊 CONTENT AREA
+      =================================================== */}
+
+      <div className="flex-1 px-6 md:px-10 py-8 space-y-10">
+
+        {/* ===================================================
+            🌌 TOP NAVBAR
+        =================================================== */}
+
+        <div className="
+          flex justify-between items-center
+          bg-white/5 backdrop-blur-xl
+          border border-white/10
+          rounded-2xl px-6 py-4
+        ">
+          <h1 className="text-xl font-semibold">
             Tutor Dashboard
           </h1>
-          <p className="text-gray-400 mt-1">
-            Welcome back, {tutor.firstName} 👋
-          </p>
+
+          <div className="flex items-center gap-3">
+            <div className="text-sm text-gray-400">
+              Welcome,
+            </div>
+            <div className="font-semibold">
+              {tutor.firstName}
+            </div>
+          </div>
         </div>
 
-        {/* PROFILE CARD */}
-        <Card>
-          <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+        {/* ===================================================
+            👤 PROFILE HERO CARD
+        =================================================== */}
 
-            <img
-              src={tutor.profilePhoto || "/default-avatar.png"}
-              className="w-28 h-28 rounded-full border border-white/10"
-            />
+        <div className="
+          rounded-3xl
+          bg-gradient-to-br from-indigo-600/10 via-cyan-500/5 to-emerald-500/10
+          backdrop-blur-xl
+          border border-white/10
+          p-8
+          shadow-[0_0_40px_rgba(99,102,241,0.15)]
+        ">
 
-            <div className="flex-1">
-              <h2 className="text-2xl font-semibold">
-                {tutor.firstName} {tutor.lastName}
-              </h2>
+          <div className="flex justify-between items-center flex-wrap gap-6">
 
-              <p className="text-gray-400 mt-1">
-                {tutor.subject} Tutor
-              </p>
+            {/* LEFT */}
+            <div className="flex items-center gap-6">
 
-              {/* DETAILS */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4 text-sm">
-                <Detail icon={<MapPin />} label="City" value={tutor.city || "—"} />
-                <Detail icon={<Clock />} label="Experience" value={`${tutor.experience || 0} yrs`} />
-                <Detail icon={<Laptop />} label="Mode" value={tutor.modeOfTeaching || "—"} />
-                <Detail icon={<GraduationCap />} label="Qualification" value={tutor.highestQualification || "—"} />
-                <Detail icon={<User />} label="Gender" value={tutor.gender || "—"} />
+              {tutor.profilePhoto ? (
+                <img
+                  src={tutor.profilePhoto}
+                  className="
+                    w-24 h-24 rounded-full object-cover
+                    border border-indigo-400/40
+                  "
+                />
+              ) : (
+                <div className="w-24 h-24 rounded-full bg-indigo-600/20 flex items-center justify-center">
+                  <User/>
+                </div>
+              )}
+
+              <div>
+                <h2 className="
+                  text-3xl font-bold
+                  bg-gradient-to-r from-indigo-400 to-cyan-400
+                  bg-clip-text text-transparent
+                ">
+                  {tutor.firstName} {tutor.lastName}
+                </h2>
+
+                <p className="text-gray-400 flex items-center gap-2 mt-1">
+                  <Sparkles size={14}/>
+                  {tutor.subject || "Tutor"}
+                </p>
               </div>
 
-              {/* BADGES */}
-              <div className="flex gap-3 mt-4">
-                {tutor.badges?.verified && (
-                  <Badge icon={<BadgeCheck />} label="Verified" />
-                )}
-                {tutor.badges?.topTutor && (
-                  <Badge icon={<Trophy />} label="Top Tutor" />
-                )}
-              </div>
             </div>
 
             {/* COINS */}
-            <div className="text-right">
-              <p className="text-sm text-gray-300">Coins Balance</p>
-              <p className="text-3xl font-extrabold text-amber-400 flex items-center gap-2">
-                <Coins /> {tutor.coins}
+            <div className="
+              px-6 py-4 rounded-2xl
+              bg-gradient-to-br from-amber-500/10 to-orange-500/10
+              border border-amber-400/20
+            ">
+              <div className="flex items-center gap-2 text-amber-400">
+                <Wallet size={16}/>
+                Coins Balance
+              </div>
+
+              <p className="text-3xl font-bold text-amber-400 mt-2">
+                {tutor.coins || 0} 🪙
               </p>
+
               <button
-                onClick={() => navigate("/tutor/buy-coins")}
-                className="mt-2 px-4 py-2 hover:bg-amber-500 text-amber-50 bg-amber-800 rounded-xl"
+                onClick={()=>window.location.href="/tutor/buy-coins"}
+                className="
+                  mt-3 px-5 py-2 rounded-xl
+                  bg-gradient-to-r from-amber-400 to-orange-500
+                  text-black text-sm font-semibold
+                  hover:scale-105 transition
+                "
               >
                 Buy Coins
               </button>
             </div>
-          </div>
-        </Card>
 
-        {/* STATS */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <Stat icon={<Users />} label="Students I teach" value={tutor.studentYouTeach} />
-          <Stat
-            icon={<BookOpen />}
-            label="Questions Solved"
-            value={questions.reduce((a, b) => a + b.count, 0)}
+          </div>
+
+        </div>
+
+        {/* ===================================================
+            📊 INFO GRID (SAAS CARDS)
+        =================================================== */}
+
+        <div className="grid md:grid-cols-3 gap-6">
+
+          <InfoCard
+            icon={<GraduationCap size={16}/>}
+            label="Qualification"
+            value={tutor.highestQualification}
           />
-          <Stat icon={<Trophy />} label="Rating" value="4.8 ⭐" />
+
+          <InfoCard
+            icon={<Briefcase size={16}/>}
+            label="Experience"
+            value={`${tutor.experience || 0} yrs`}
+          />
+
+          <InfoCard
+            icon={<BookOpen size={16}/>}
+            label="Mode of Teaching"
+            value={tutor.modeOfTeaching}
+          />
+
         </div>
 
-        {/* MAIN GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* ===================================================
+            📝 ABOUT
+        =================================================== */}
 
-          {/* LEFT */}
-          <div className="lg:col-span-2 space-y-8">
+        {tutor.aboutTutor && (
+          <div className="
+            rounded-2xl
+            bg-white/5 backdrop-blur-xl
+            border border-white/10
+            p-6
+          ">
+            <p className="text-xs text-gray-400 mb-2">
+              About Tutor
+            </p>
 
-            {/* EARNINGS */}
-            <Card>
-              <SectionTitle icon="📈" text="Earnings Overview" />
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={earnings}>
-                    <XAxis dataKey="month" stroke="#888" />
-                    <YAxis stroke="#888" />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="amount" stroke="#6366f1" strokeWidth={3} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </Card>
-
-            {/* QUESTIONS */}
-            <Card>
-              <SectionTitle icon="🧠" text="Question Solving History" />
-              {questions.map((q, i) => (
-                <div key={i} className="flex justify-between text-sm">
-                  <span>{q.subject}</span>
-                  <span className="text-indigo-400">{q.count}</span>
-                </div>
-              ))}
-            </Card>
-
-            {/* DEMO VIDEO */}
-            <Card>
-              <SectionTitle icon="🎥" text="Demo Teaching Video" />
-              <input
-                value={demoVideo}
-                onChange={(e) => setDemoVideo(e.target.value)}
-                placeholder="YouTube video link"
-                className="input"
-              />
-              <button
-                onClick={saveDemoVideo}
-                className="mt-3 px-5 py-2 rounded-xl bg-indigo-500"
-              >
-                Save Video
-              </button>
-
-              {demoVideo && (
-                <iframe
-                  className="mt-4 rounded-xl border border-white/10 w-full h-56"
-                  src={demoVideo.replace("watch?v=", "embed/")}
-                  allowFullScreen
-                />
-              )}
-            </Card>
+            <p className="text-sm text-gray-200 leading-relaxed">
+              {tutor.aboutTutor}
+            </p>
           </div>
+        )}
 
-          {/* RIGHT */}
-          <div className="space-y-8">
-
-            {/* APPLY HISTORY */}
-            <Card>
-  <SectionTitle icon={<History />} text="Tuition Apply History" />
-
-  {applyHistory.length === 0 ? (
-    <p className="text-sm text-gray-400">
-      No tuitions applied yet
-    </p>
-  ) : (
-    <div className="space-y-4 max-h-[420px] overflow-y-auto pr-1">
-      {applyHistory.slice(0, 3).map((h, i) => (
-        <div
-          key={i}
-          className="rounded-xl border border-white/10
-                     bg-black/40 p-4 hover:border-indigo-400 transition"
-        >
-          {/* TOP */}
-          <div className="flex justify-between items-start mb-3">
-            <div>
-              <h4 className="text-lg font-semibold text-indigo-300">
-                {h.subject}
-              </h4>
-              <p className="text-sm text-gray-400">
-                Class {h.studentClass}
-              </p>
-            </div>
-
-            <span className="text-xs text-gray-500">
-              {new Date(h.createdAt).toLocaleDateString()}
-            </span>
-          </div>
-
-          {/* STUDENT INFO */}
-          <div className="grid grid-cols-2 gap-3 text-sm mb-3">
-            <Info label="Student" value={h.name || "Student"} />
-            <Info label="Phone" value={h.mobile || "N/A"} />
-            <Info
-              label="Mode"
-              value={
-                h.tuitionPlace === "online"
-                  ? "Online"
-                  : h.tuitionPlace === "home"
-                  ? "Home Tuition"
-                  : "Offline"
-              }
-            />
-            <Info label="Coins Used" value={`-${h.coinCost} 🪙`} />
-          </div>
-
-          {/* STATUS */}
-          <div className="flex justify-end">
-            <span className="px-3 py-1 text-xs rounded-full
-                             bg-green-500/10 text-green-400">
-              Applied
-            </span>
-          </div>
-        </div>
-      ))}
-    </div>
-  )}
-</Card>
-
-
-            {/* CHAT */}
-            <Card>
-              <SectionTitle icon={<MessageCircle />} text="Student Chats" />
-              {chats.map((c, i) => (
-                <div key={i} className="text-sm">
-                  <b>{c.studentName}:</b>{" "}
-                  <span className="text-gray-400">{c.lastMessage}</span>
-                </div>
-              ))}
-            </Card>
-
-          </div>
-        </div>
       </div>
+
     </div>
   );
-};
+}
 
-export default TutorDashboard;
+/* ===================================================
+   🧩 SIDEBAR ITEM
+=================================================== */
 
-/* ================= UI HELPERS ================= */
-
-const Card = ({ children }) => (
-  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-    {children}
+const NavItem = ({icon,label,active})=>(
+  <div className={`
+    flex items-center gap-3 px-4 py-3 rounded-xl
+    cursor-pointer transition
+    ${active
+      ? "bg-indigo-500/20 text-indigo-300"
+      : "hover:bg-white/5 text-gray-400"}
+  `}>
+    {icon}
+    {label}
   </div>
 );
 
-const Stat = ({ icon, label, value }) => (
-  <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex gap-4">
-    <div className="text-indigo-400">{icon}</div>
-    <div>
-      <p className="text-gray-400 text-sm">{label}</p>
-      <p className="text-xl font-bold">{value}</p>
+/* ===================================================
+   🧩 INFO CARD
+=================================================== */
+
+const InfoCard = ({icon,label,value})=>(
+  <div className="
+    rounded-2xl
+    bg-white/5 backdrop-blur-xl
+    border border-white/10
+    p-6
+    hover:border-indigo-400/30
+    transition
+  ">
+    <div className="flex items-center gap-2 text-gray-400 text-xs mb-2">
+      {icon}
+      {label}
     </div>
+
+    <p className="text-lg font-semibold">
+      {value || "—"}
+    </p>
   </div>
-);
-
-const Badge = ({ icon, label }) => (
-  <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-sm">
-    {icon} {label}
-  </span>
-);
-
-const Detail = ({ icon, label, value }) => (
-  <div className="flex items-center gap-2 text-gray-300">
-    <span className="text-indigo-400">{icon}</span>
-    <span>{label}: <b className="text-white">{value}</b></span>
-  </div>
-);
-
-const Info = ({ label, value }) => (
-  <div className="bg-white/5 rounded-lg px-3 py-2">
-    <p className="text-xs text-gray-400">{label}</p>
-    <p className="text-sm font-medium text-white">{value}</p>
-  </div>
-);
-
-const SectionTitle = ({ icon, text }) => (
-  <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-indigo-300">
-    {icon} {text}
-  </h3>
 );

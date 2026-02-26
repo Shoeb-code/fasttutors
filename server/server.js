@@ -20,7 +20,12 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 import requestAuth from "./routes/requestAuth.js";
 
 
-import studyMaterialRoutes from "./module/studyMaterial/studyMaterial.routes.js";
+
+
+import adminRoutes from './module/Admin/routes/admin.routes.js'
+import { studentRouter } from "./module/parent/routes/studentRoute.js";
+
+
 
 const app = express();
 
@@ -69,8 +74,12 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api", requestAuth);
 
 
+app.use("/api/admin", adminRoutes);
 
-app.use("/api/study-materials", studyMaterialRoutes);
+app.use('/api/student',studentRouter)
+
+
+
 
 /* ================= DB ================= */
 

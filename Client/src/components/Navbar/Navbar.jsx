@@ -72,11 +72,11 @@ const Navbar = () => {
 <div className="hidden md:flex items-center gap-8">
 
   <NavLink
-    to="/all-tuitions"
+    to="/public/all-tuitions"
     className={({ isActive }) =>
-      `text-sm font-medium transition ${
+      `text-sm font-medium transition p-2 m-2 rounded-2xl ${
         isActive
-          ? "text-amber-400"
+          ? "text-white bg-violet-600"
           : "text-neutral-300 hover:text-white"
       }`
     }
@@ -87,9 +87,9 @@ const Navbar = () => {
   <NavLink
     to="/study-materials"
     className={({ isActive }) =>
-      `text-sm font-medium transition ${
+      `text-sm font-medium transition p-2 m-2 rounded-2xl ${
         isActive
-          ? "text-blue-400"
+          ? "text-white bg-violet-600"
           : "text-neutral-300 hover:text-white"
       }`
     }

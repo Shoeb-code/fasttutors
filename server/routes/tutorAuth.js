@@ -89,12 +89,14 @@ tutorRouter.post("/tutor-register", async (req, res) => {
 tutorRouter.post("/tutor-login", async(req, res) => {
   try {
     const { email, password } = req.body;
+    console.log( req.body);
 
-    const tutor = await Tutor.findOne({email});
+    const tutor = await Tutor.findOne({ email }).select("+password");
     
     if (!tutor) return res.json({ success: false, message: "User not found" });
 
-    const isMatch = await bcrypt.compare(password, tutor.password);
+    const isMatch = await bcrypt.compare(password,tutor.password);
+    console.log(isMatch);
 
     if (!isMatch) return res.json({ success: false, message: "Invalid credentials" });
 
