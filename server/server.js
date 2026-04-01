@@ -24,6 +24,7 @@ import requestAuth from "./routes/requestAuth.js";
 
 import adminRoutes from './module/Admin/routes/admin.routes.js'
 import { studentRouter } from "./module/parent/routes/studentRoute.js";
+import publicRoute from "./module/public/routes/publicRoutes.js";
 
 
 
@@ -78,8 +79,8 @@ app.use("/api/admin", adminRoutes);
 
 app.use('/api/student',studentRouter)
 
-
-
+/* ================= public ================= */
+ app.use('/api/',publicRoute)
 
 /* ================= DB ================= */
 

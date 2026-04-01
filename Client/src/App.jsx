@@ -55,6 +55,7 @@ import AdminProtect from "./admin/AdminProtect.jsx";
 /* ================= ROUTE GUARD ================= */
 import PrivateRoute from "./components/ProtectRoute.jsx";
 import AdminLayout from "./admin/layout/ AdminLayout.jsx";
+import PublicTuitions from "../public/pages/PublicTuitions.jsx";
 
 
 
@@ -147,13 +148,11 @@ function AppRouter() {
   element={<StudentMaterialViewer />}
 />
 
+<Route path="/public/all-tuitions" 
+element={<PublicTuitions/>} />
 
-<Route
-          path="/public/all-tuitions"
-          element={
-              <PublicTuitions />
-          }
-        />
+
+
 
 
 

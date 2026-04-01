@@ -64,10 +64,6 @@ export default function TutorDashboard() {
   return(
     <div className="min-h-screen bg-black text-white flex">
 
-     
-
-     
-
       {/* ===================================================
           📊 CONTENT AREA
       =================================================== */}
@@ -83,16 +79,17 @@ export default function TutorDashboard() {
           bg-white/5 backdrop-blur-xl
           border border-white/10
           rounded-2xl px-6 py-4
+           hover:border-green-700/80
         ">
-          <h1 className="text-xl font-semibold">
-            Tutor Dashboard
+          <h1 className="text-[25px] font-semibold">
+            Tutor <span className="text-green-600">Dashboard</span>
           </h1>
 
           <div className="flex items-center gap-3">
-            <div className="text-sm text-gray-400">
+            <div className="text-[18px] text-gray-300">
               Welcome,
             </div>
-            <div className="font-semibold">
+            <div className="font-semibold text-2xl text-green-600">
               {tutor.firstName}
             </div>
           </div>
@@ -109,6 +106,7 @@ export default function TutorDashboard() {
           border border-white/10
           p-8
           shadow-[0_0_40px_rgba(99,102,241,0.15)]
+           hover:border-indigo-700/80
         ">
 
           <div className="flex justify-between items-center flex-wrap gap-6">
@@ -120,7 +118,7 @@ export default function TutorDashboard() {
                 <img
                   src={tutor.profilePhoto}
                   className="
-                    w-24 h-24 rounded-full object-cover
+                    w-44 h-44 rounded-full object-cover
                     border border-indigo-400/40
                   "
                 />
@@ -133,16 +131,17 @@ export default function TutorDashboard() {
               <div>
                 <h2 className="
                   text-3xl font-bold
-                  bg-gradient-to-r from-indigo-400 to-cyan-400
+                  bg-gradient-to-r from-indigo-700 to-cyan-500
                   bg-clip-text text-transparent
                 ">
                   {tutor.firstName} {tutor.lastName}
                 </h2>
 
                 <p className="text-gray-400 flex items-center gap-2 mt-1">
-                  <Sparkles size={14}/>
+                  <Sparkles size={24}/>
                   {tutor.subject || "Tutor"}
                 </p>
+
               </div>
 
             </div>
@@ -150,15 +149,15 @@ export default function TutorDashboard() {
             {/* COINS */}
             <div className="
               px-6 py-4 rounded-2xl
-              bg-gradient-to-br from-amber-500/10 to-orange-500/10
-              border border-amber-400/20
+              bg-gray-950 
+              border border-indigo-600
             ">
-              <div className="flex items-center gap-2 text-amber-400">
-                <Wallet size={16}/>
+              <div className="flex items-center gap-2 text-gray-400">
+                <Wallet className="text-blue-600" size={26}/>
                 Coins Balance
               </div>
 
-              <p className="text-3xl font-bold text-amber-400 mt-2">
+              <p className="text-3xl font-bold text-amber-700 mt-2">
                 {tutor.coins || 0} 🪙
               </p>
 
@@ -166,9 +165,10 @@ export default function TutorDashboard() {
                 onClick={()=>window.location.href="/tutor/buy-coins"}
                 className="
                   mt-3 px-5 py-2 rounded-xl
-                  bg-gradient-to-r from-amber-400 to-orange-500
-                  text-black text-sm font-semibold
+                  bg-gradient-to-r from-blue-800 to-red-600
+                  text-gray-200 text-sm font-semibold
                   hover:scale-105 transition
+                
                 "
               >
                 Buy Coins
@@ -186,19 +186,19 @@ export default function TutorDashboard() {
         <div className="grid md:grid-cols-3 gap-6">
 
           <InfoCard
-            icon={<GraduationCap size={16}/>}
+            icon={<GraduationCap className="text-amber-300"  size={30}/>}
             label="Qualification"
             value={tutor.highestQualification}
           />
 
           <InfoCard
-            icon={<Briefcase size={16}/>}
+            icon={<Briefcase className="text-amber-800" size={30}/>}
             label="Experience"
             value={`${tutor.experience || 0} yrs`}
           />
 
           <InfoCard
-            icon={<BookOpen size={16}/>}
+            icon={<BookOpen className="text-blue-500" size={30}/>}
             label="Mode of Teaching"
             value={tutor.modeOfTeaching}
           />
@@ -215,12 +215,15 @@ export default function TutorDashboard() {
             bg-white/5 backdrop-blur-xl
             border border-white/10
             p-6
-          ">
-            <p className="text-xs text-gray-400 mb-2">
+            hover:border-indigo-700/80
+    transition
+  ">
+          
+            <p className="text-[20px] text-blue-500 mb-2">
               About Tutor
             </p>
 
-            <p className="text-sm text-gray-200 leading-relaxed">
+            <p className="text-[16px] text-gray-400 leading-relaxed">
               {tutor.aboutTutor}
             </p>
           </div>
@@ -256,16 +259,18 @@ const NavItem = ({icon,label,active})=>(
 const InfoCard = ({icon,label,value})=>(
   <div className="
     rounded-2xl
-    bg-white/5 backdrop-blur-xl
+    bg-gray-950 backdrop-blur-xl
     border border-white/10
     p-6
-    hover:border-indigo-400/30
+    hover:border-indigo-700/80
     transition
   ">
-    <div className="flex items-center gap-2 text-gray-400 text-xs mb-2">
-      {icon}
-      {label}
+    <div className="flex  items-center gap-2  mb-2">
+    {icon}
+    <span className=" text-gray-400 text-[16px] ">{label}</span> 
     </div>
+
+    
 
     <p className="text-lg font-semibold">
       {value || "—"}

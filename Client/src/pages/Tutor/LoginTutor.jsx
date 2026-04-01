@@ -28,6 +28,8 @@ const LoginTutor = () => {
 
   return (
     <div className="min-h-screen  flex items-center justify-center px-6">
+       
+            
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -37,8 +39,12 @@ const LoginTutor = () => {
                    rounded-3xl shadow-[0_0_80px_rgba(34,197,94,0.25)]
                    overflow-hidden"
       >
+
+        
         {/* LEFT BRAND PANEL */}
         <div className="hidden md:flex flex-col justify-between p-10 bg-gradient-to-br from-gray-600/20 to-gray-600/10">
+
+   
           <div>
             <h1 className="text-4xl font-extrabold text-white tracking-wide">
               Fast<span className="text-green-600">Tutors</span>
@@ -66,17 +72,17 @@ const LoginTutor = () => {
         {/* RIGHT LOGIN FORM */}
         <div className="p-10 flex flex-col justify-center">
           <h2 className="text-3xl font-extrabold text-white mb-2">
-            Welcome Back 👋
+            Welcome <span className="text-green-600">Back </span> 👋
           </h2>
 
-          <p className="text-gray-300 mb-8">
+          <p className="text-gray-300 text-[20px] font-bold mb-8">
             Login to continue your teaching journey 🚀
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-[17px] font-medium text-gray-300 mb-2">
                 Email Address
               </label>
               <input
@@ -95,7 +101,7 @@ const LoginTutor = () => {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-[17px]  font-medium text-gray-300 mb-2">
                 Password
               </label>
               <input
@@ -129,12 +135,11 @@ const LoginTutor = () => {
           {/* Bottom Text */}
           <p className="text-gray-400 text-sm text-center mt-8">
             New to FastTutors?{" "}
-            <a
-              href="/register"
-              className="text-green-600 hover:underline font-medium"
+            < span  onClick={()=>navigate('/tutor-register')}
+              className="text-green-600 hover:underline font-medium cursor-pointer"
             >
               Create Tutor Account
-            </a>
+            </span>
           </p>
         </div>
       </motion.div>

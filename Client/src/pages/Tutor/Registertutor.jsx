@@ -19,6 +19,7 @@ const stepMotion = {
 };
 
 const RegisterTutor = () => {
+
   const { registerTutor } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ const RegisterTutor = () => {
     lastName: "",
     email: "",
     password: "",
-    role: "tutor",
+    role:"tutor",
   });
 
   const handleChange = (e) =>
@@ -78,7 +79,7 @@ const RegisterTutor = () => {
   return (
     <motion.div
       {...pageMotion}
-      className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-slate-900
+      className="min-h-screen  bg-gradient-to-br from-black via-gray-950 to-slate-900
                  flex items-center justify-center px-6"
     >
       <motion.div
@@ -86,7 +87,7 @@ const RegisterTutor = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-6xl grid md:grid-cols-2
-                   bg-white/5 backdrop-blur-xl border border-white/10
+                   bg-gray-950 backdrop-blur-xl border border-white/10
                    rounded-3xl shadow-2xl overflow-hidden"
       >
 
@@ -96,7 +97,7 @@ const RegisterTutor = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
           className="hidden md:flex flex-col items-center justify-center
-                     p-12 bg-gradient-to-br from-indigo-600/10 to-blue-600/10"
+                     p-12 bg-gradient-to-br from-indigo-700/10 to-blue-500/10"
         >
           <motion.img
             src={assets.logo}
@@ -104,27 +105,27 @@ const RegisterTutor = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="h-40 mb-10 drop-shadow-2xl"
+            className="h-90 w-90 rounded-2xl mb-10 drop-shadow-2xl"
           />
 
-          <h3 className="text-4xl font-bold text-white mb-4 text-center">
-            Teach. Inspire. Transform.
+          <h3 className="text-4xl font-bold text-gray-600 mb-4 text-center">
+            Teach. <span className="text-green-700">Inspire.</span>  Transform.
           </h3>
 
-          <p className="text-slate-300 text-center leading-relaxed max-w-sm">
+          <p className="text-gray-400 text-center leading-relaxed max-w-sm">
             “A good teacher can inspire hope, ignite the imagination,
             and instill a love for learning.”
           </p>
 
-          <p className="mt-6 text-indigo-300 italic text-lg">
+          <p className="mt-6 text-indigo-600 italic text-lg">
             Your tutoring journey starts here 🚀
           </p>
         </motion.div>
 
         {/* RIGHT FORM */}
         <div className="p-8 md:p-14">
-          <h2 className="text-4xl font-extrabold text-indigo-400 text-center mb-2">
-            Tutor Registration
+          <h2 className="text-4xl font-extrabold text-gray-200 text-center mb-2">
+            Tutor <span className="text-amber-700">Registration</span>
           </h2>
           <p className="text-slate-400 text-center mb-10">
             Create your free FastTutors account
@@ -143,6 +144,7 @@ const RegisterTutor = () => {
               {/* STEP 1 */}
               {step === 1 && (
                 <motion.div key="step1" {...stepMotion} className="space-y-5">
+                 
                   <Input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
                   <Input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
                   <Input type="email" name="email" placeholder="Email address" value={formData.email} onChange={handleChange} />
@@ -188,14 +190,20 @@ const RegisterTutor = () => {
                 </motion.div>
               )}
 
+              
+
+
+
+
+
             </AnimatePresence>
           </form>
 
           <p className="text-slate-400 text-center mt-8">
             Already have an account?{" "}
-            <a href="/login" className="text-indigo-400 hover:underline">
+            <span  onClick={()=>navigate('/tutor-login')} className="text-indigo-400 hover:underline cursor-pointer">
               Login
-            </a>
+            </span>
           </p>
         </div>
       </motion.div>
@@ -234,7 +242,7 @@ const PrimaryButton = ({ children, ...props }) => (
     whileHover={{ scale: 1.03 }}
     whileTap={{ scale: 0.97 }}
     {...props}
-    className="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-600
+    className="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-800 to-blue-500
                text-white font-semibold disabled:opacity-50"
   >
     {children}
