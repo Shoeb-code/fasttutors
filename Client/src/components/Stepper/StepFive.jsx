@@ -19,15 +19,9 @@ function StepFive({ onNext, onPrev, data, setData }) {
     <div className="w-full border border-white/10 rounded-2xl p-6 lg:p-8 text-gray-200 bg-white/5 backdrop-blur-sm">
 
       {/* Progress */}
-      <div className="mb-8">
-        <p className="text-sm text-gray-400 mb-2">Step 5 of 6</p>
-        <div className="h-2 bg-gray-800 rounded-full">
-          <div className="h-2 w-5/6 bg-blue-600 rounded-full" />
-        </div>
-      </div>
 
       {/* Title */}
-      <h2 className="text-3xl font-bold mb-2">
+      <h2 className="text-3xl text-blue-500 font-bold mb-2">
         Your Contact Details
       </h2>
       <p className="text-gray-400 mb-8">
@@ -36,7 +30,7 @@ function StepFive({ onNext, onPrev, data, setData }) {
 
       {/* Name */}
       <div className="mb-6">
-        <label className="block mb-2 text-gray-300 font-medium">
+        <label className="block mb-2 text-indigo-300 font-medium">
           Full Name
         </label>
         <input
@@ -50,7 +44,7 @@ function StepFive({ onNext, onPrev, data, setData }) {
 
       {/* Email */}
       <div className="mb-6">
-        <label className="block mb-2 text-gray-300 font-medium">
+        <label className="block mb-2 text-indigo-300 font-medium">
           Email Address
         </label>
         <input
@@ -64,13 +58,13 @@ function StepFive({ onNext, onPrev, data, setData }) {
 
       {/* Mobile */}
       <div className="mb-6">
-        <label className="block mb-2 text-gray-300 font-medium">
+        <label className="block mb-2 text-indigo-300 font-medium">
           Mobile Number
         </label>
         <input
           type="tel"
           value={data.mobile}
-          placeholder="9876543210"
+          placeholder="98765*****"
           className="input"
           onChange={(e) => setData({ ...data, mobile: e.target.value })}
         />
@@ -78,7 +72,7 @@ function StepFive({ onNext, onPrev, data, setData }) {
 
       {/* Password */}
       <div className="mb-6">
-        <label className="block mb-2 text-gray-300 font-medium">
+        <label className="block mb-2 text-indigo-300 font-medium">
           Create Password
         </label>
         <input
@@ -92,7 +86,7 @@ function StepFive({ onNext, onPrev, data, setData }) {
 
       {/* Confirm Password */}
       <div className="mb-10">
-        <label className="block mb-2 text-gray-300 font-medium">
+        <label className="block mb-2 text-indigo-300 font-medium">
           Confirm Password
         </label>
         <input

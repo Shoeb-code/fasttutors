@@ -8,7 +8,7 @@ import { LoadScript } from "@react-google-maps/api";
 
 AOS.init({ duration: 1000, once: true });
 
-console.log(import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

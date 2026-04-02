@@ -8,15 +8,15 @@ export default function StepThree({ onNext, onPrev, data, setData }) {
   
 
       {/* Title */}
-      <h2 className="text-3xl font-bold mb-2">
+      <h2 className="text-3xl text-indigo-500 font-bold mb-2">
         Weekly Sessions
       </h2>
-      <p className="text-gray-400 mb-8">
+      <p className="text-gray-300 mb-8">
         How many classes do you want per week?
       </p>
 
       {/* Options */}
-      <div className="grid gap-4 mb-14">
+      <div className="grid gap-4 mb-14 text-violet-300">
         {[
        { label: "2 classes in a week", value: 2 },
        { label: "3 classes in a week", value: 3 },

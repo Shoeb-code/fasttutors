@@ -83,39 +83,50 @@ const StepSix = ({ onNext, onPrev, data }) => {
   };
 
   /* ================= OTP INPUT ================= */
-  const handleOtpChange = (value, index) => {
-    if (!/^\d?$/.test(value)) return;
+  /* ================= OTP INPUT ================= */
+const handleOtpChange = (value, index) => {
+  if (!/^\d?$/.test(value)) return;
 
+  const newOtp = [...otp];
+  newOtp[index] = value;
+  setOtp(newOtp);
+
+  // Auto move forward
+  if (value && index < OTP_LENGTH - 1) {
+    inputsRef.current[index + 1]?.focus();
+  }
+
+  // Auto verify when all boxes are filled
+  if (newOtp.join("").length === OTP_LENGTH) {
+    verifyOtp();
+  }
+};
+
+const handleKeyDown = (e, index) => {
+  if (e.key === "Backspace") {
     const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
 
-    if (value && index === OTP_LENGTH - 1) {
-      verifyOtp();
-    }
-  };
-
-  const handleKeyDown = (e, index) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
+    if (newOtp[index]) {
+      newOtp[index] = "";
+      setOtp(newOtp);
+    } else if (index > 0) {
+      newOtp[index - 1] = "";
+      setOtp(newOtp);
       inputsRef.current[index - 1]?.focus();
     }
-  };
+  }
+};
 
   return (
     <div className="w-full border border-white/10 rounded-2xl p-6 lg:p-8 bg-white/5 backdrop-blur-sm text-gray-200">
 
-      {/* PROGRESS */}
-      <div className="mb-8">
-        <p className="text-sm text-gray-400 mb-2">Step 6 of 6</p>
-        <div className="h-2 bg-gray-800 rounded-full">
-          <div className="h-2 w-full bg-blue-600 rounded-full" />
-        </div>
-      </div>
+  
+      
 
       {/* ================= REVIEW ================= */}
       {stage === "review" && (
         <>
-          <h2 className="text-3xl font-bold mb-6">Review Your Details</h2>
+          <h2 className="text-3xl text-indigo-500 font-bold mb-6">Review Your Details</h2>
 
           <div className="grid sm:grid-cols-2 gap-4 mb-10">
             <Info label="Class" value={`Class ${data.studentClass}`} />

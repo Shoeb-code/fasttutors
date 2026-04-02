@@ -17,7 +17,6 @@ const studentSchema= new mongoose.Schema({
        fee:String,
        bio:String,
        role:String,
-
        refreshToken:String,
 })
 

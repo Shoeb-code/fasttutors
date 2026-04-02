@@ -12,11 +12,11 @@ const StepTwo = ({ onNext, onPrev, data, setData }) => {
      
 
       {/* Tuition Location */}
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="text-2xl text-amber-700 font-bold mb-6">
         Where would you like to take tuitions?
       </h2>
 
-      <div className="grid gap-4 mb-14">
+      <div className="grid gap-4 mb-14 text-indigo-400">
         {[
           { label: "At Your Home", value: "home", icon: <Home /> },
           { label: "At Tutor's Home", value: "tutor_home", icon: <User /> },
@@ -77,11 +77,11 @@ const StepTwo = ({ onNext, onPrev, data, setData }) => {
       </div>
 
       {/* Tutor Gender */}
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="text-2xl font-bold text-amber-700 mb-6">
         Select Preferred Tutor's Gender
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16">
+      <div className="grid grid-cols-1 text-gray-300 sm:grid-cols-3 gap-4 mb-16">
         {[
           { label: "Any", value: "any" },
           { label: "Male", value: "male" },

@@ -82,13 +82,11 @@ function StepFour({ onNext, onPrev, data, setData }) {
   return (
     <div className="w-full border border-white/10 rounded-2xl p-6 lg:p-8 text-gray-200 bg-white/5 backdrop-blur-sm">
       
-     
-
       {/* Title */}
-      <h2 className="text-3xl font-bold mb-2">
+      <h2 className="text-3xl text-green-600 font-bold mb-2">
         Choose Your Budget
       </h2>
-      <p className="text-gray-400 mb-8">
+      <p className="text-gray-300 mb-8">
         Select a monthly fee range that works best for you
       </p>
 
