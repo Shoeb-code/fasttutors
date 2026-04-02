@@ -25,6 +25,7 @@ import requestAuth from "./routes/requestAuth.js";
 import adminRoutes from './module/Admin/routes/admin.routes.js'
 import { studentRouter } from "./module/parent/routes/studentRoute.js";
 import publicRoute from "./module/public/routes/publicRoutes.js";
+import locationRouter from "./module/parent/routes/locationRoutes.js";
 
 
 
@@ -54,6 +55,7 @@ app.use("/api/tutor/auth", tutorAuth);
 
 // parent / student auth
 app.use("/api/parent/auth", parentAuth);
+app.use('/api/location',locationRouter)
 
 // otp
 app.use("/api/auth", otpRouter);

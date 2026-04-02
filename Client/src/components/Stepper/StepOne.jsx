@@ -1,5 +1,85 @@
+import { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import { GraduationCap, MapPin } from "lucide-react";
+
+const LocationInput = ({ data, setData }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(data.location || "");
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fetchLocations(searchTerm);
+    }, 400);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm]);
+
+  const fetchLocations = async (query) => {
+    if (!query.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `http://localhost:4000/api/location/search-location?q=${encodeURIComponent(query)}`
+      );
+
+      const locations = await res.json();
+      setSuggestions(locations);
+    } catch (error) {
+      console.error("Location fetch error:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+
+    setSearchTerm(value);
+
+    setData((prev) => ({
+      ...prev,
+      location: value,
+    }));
+  };
+
+  const handleSelect = (place) => {
+    setSearchTerm(place.display_name);
+
+    setData((prev) => ({
+      ...prev,
+      location: place.display_name,
+    }));
+
+    setSuggestions([]);
+  };
+
+  return (
+    <div className="relative w-full">
+      <input
+        type="text"
+        placeholder="Enter your location"
+        className="input pl-11 w-full"
+        value={searchTerm}
+        onChange={handleChange}
+      />
+
+      {suggestions.length > 0 && (
+        <ul className="absolute top-full left-0 w-full bg-gray-900 text-white border border-gray-700 rounded-xl shadow-lg mt-2 z-20 max-h-60 overflow-y-auto">
+          {suggestions.map((place) => (
+            <li
+              key={place.place_id}
+              className="p-3 hover:bg-gray-800 cursor-pointer"
+              onClick={() => handleSelect(place)}
+            >
+              {place.display_name}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 
 const StepOne = ({ onNext, data, setData }) => {
   const subjects = {
@@ -8,11 +88,40 @@ const StepOne = ({ onNext, data, setData }) => {
     "3": ["All Subjects", "Maths", "English", "EVS"],
     "4": ["All Subjects", "Maths", "English", "EVS"],
     "5": ["All Subjects", "Maths", "English", "EVS"],
-    "6": ["All Subjects", "Maths and Science", "Maths", "Science", "English", "Hindi"],
-    "7": ["All Subjects", "Maths and Science", "Maths", "Science", "English", "Hindi"],
-    "8": ["All Subjects", "Maths and Science", "Maths", "Science", "English", "Hindi"],
-    "9": ["All Subjects", "Maths And Science", "Maths, Science And Social Studies"],
-    "10": ["All Subjects", "Maths And Science", "Maths, Science And Social Studies"],
+    "6": [
+      "All Subjects",
+      "Maths and Science",
+      "Maths",
+      "Science",
+      "English",
+      "Hindi",
+    ],
+    "7": [
+      "All Subjects",
+      "Maths and Science",
+      "Maths",
+      "Science",
+      "English",
+      "Hindi",
+    ],
+    "8": [
+      "All Subjects",
+      "Maths and Science",
+      "Maths",
+      "Science",
+      "English",
+      "Hindi",
+    ],
+    "9": [
+      "All Subjects",
+      "Maths And Science",
+      "Maths, Science And Social Studies",
+    ],
+    "10": [
+      "All Subjects",
+      "Maths And Science",
+      "Maths, Science And Social Studies",
+    ],
     "11": ["Physics", "Chemistry", "Maths", "Biology"],
     "12": ["Physics", "Chemistry", "Maths", "Biology"],
   };
@@ -73,7 +182,11 @@ const StepOne = ({ onNext, data, setData }) => {
               className="input"
               value={data.studentClass}
               onChange={(e) =>
-                setData({ ...data, studentClass: e.target.value, subject: "" })
+                setData({
+                  ...data,
+                  studentClass: e.target.value,
+                  subject: "",
+                })
               }
             >
               <option value="">Select Class</option>
@@ -100,17 +213,9 @@ const StepOne = ({ onNext, data, setData }) => {
             </select>
 
             {/* Location */}
-            <div className="relative">
-              <MapPin className="absolute left-4 top-3.5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Your Area / City"
-                className="input pl-11"
-                value={data.location}
-                onChange={(e) =>
-                  setData({ ...data, location: e.target.value })
-                }
-              />
+            <div className="relative w-full">
+              
+              <LocationInput data={data} setData={setData} />
             </div>
 
             {/* Landmark */}
@@ -129,7 +234,11 @@ const StepOne = ({ onNext, data, setData }) => {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onNext}
-              disabled={!data.studentClass || !data.subject || !data.location}
+              disabled={
+                !data.studentClass ||
+                !data.subject ||
+                !data.location
+              }
               className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg disabled:opacity-40"
             >
               Continue →
@@ -138,8 +247,7 @@ const StepOne = ({ onNext, data, setData }) => {
         </div>
       </motion.div>
 
-      {/* Input styles */}
-      <style jsx>{`
+      <style>{`
         .input {
           width: 100%;
           padding: 0.75rem 1rem;
@@ -149,6 +257,7 @@ const StepOne = ({ onNext, data, setData }) => {
           color: #e5e7eb;
           outline: none;
         }
+
         .input:focus {
           border-color: #3b82f6;
           box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);

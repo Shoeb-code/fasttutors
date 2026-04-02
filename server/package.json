@@ -13,6 +13,7 @@
   "type": "module",
   "dependencies": {
     "@react-google-maps/api": "^2.20.8",
+    "axios": "^1.14.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^1.41.3",
