@@ -62,24 +62,24 @@ function BestAchievment() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* TEXT */}
           <motion.div variants={item} className="space-y-6">
-            <h1 className="text-3xl md:text-4xl font-bold">
+            <h1 className="text-3xl text-green-800 md:text-4xl font-bold">
               Our Best Achievements
             </h1>
 
-            <ul className="space-y-4 text-[16px] p-6 bg-white/5 backdrop-blur-xl rounded-2xl text-gray-300">
-              <li>
+            <ul className="space-y-4 text-[16px] p-6  bg-white/5 backdrop-blur-xl rounded-2xl text-gray-300">
+              <li className="text-gray-300 rounded-2xl bg-gray-950 p-2 m-2">
                 1. Growing User base: Demonstrates the faith of students and
                 teachers in our credible services.
               </li>
-              <li>
+              <li className="text-gray-300 rounded-2xl bg-gray-950 p-2 m-2">
                 2. Successful Tutor-Student Matches: Shows our ability to bridge
                 student and tutor needs.
               </li>
-              <li>
+              <li className="text-gray-300 rounded-2xl bg-gray-950 p-2 m-2">
                 3. Positive Feedback and Testimonials: Reflects tutoring quality
                 and builds trust.
               </li>
-              <li>
+              <li className="text-gray-300 rounded-2xl bg-gray-950 p-2 m-2">
                 4. Improved Academic Performance: Showcases real success stories
                 with tangible results.
               </li>
@@ -98,7 +98,7 @@ function BestAchievment() {
               className="
               h-[320px] md:h-[360px]
               rounded-3xl
-              shadow-2xl
+              shadow-2xl 
               border border-white/10
               hover:scale-[1.02]
               transition duration-500

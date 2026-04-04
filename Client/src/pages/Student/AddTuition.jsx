@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContextParent } from "../../context/AuthParent.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 import { pageMotion, cardMotion, hoverScale } from "../../ui/motion";
 import { colors } from "../../ui/colors";
@@ -40,6 +41,108 @@ const getSuggestedFee = (cls, mode) => {
 
   return Math.round(base * factor);
 };
+ 
+// location 
+const LocationInput = ({ data, setData }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(data.location || "");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchTerm.trim()) {
+        fetchLocations(searchTerm);
+      } else {
+        setSuggestions([]);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm]);
+
+  const fetchLocations = async (query) => {
+    try {
+      setLoading(true);
+
+      const res = await fetch(
+        `http://localhost:4000/api/location/search-location?q=${encodeURIComponent(query)}`
+      );
+
+      const locations = await res.json();
+      setSuggestions(locations || []);
+    } catch (error) {
+      console.error("Location fetch error:", error);
+      setSuggestions([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    setData((prev) => ({
+      ...prev,
+      location: value,
+    }));
+  };
+
+  const handleSelect = (place) => {
+    setSearchTerm(place.display_name);
+
+    setData((prev) => ({
+      ...prev,
+      location: place.display_name,
+    }));
+
+    setSuggestions([]);
+  };
+
+  return (
+    <div>
+      <label className="block mb-2 text-sm text-gray-300">
+        Location
+      </label>
+
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search your area, city, or locality"
+          className="w-full bg-gray-950 border border-gray-700 rounded-xl
+                     px-4 py-3 text-white focus:ring-2
+                     focus:ring-indigo-500 outline-none"
+          value={searchTerm}
+          onChange={handleChange}
+        />
+
+        {loading && (
+          <p className="text-xs text-gray-400 mt-2">
+            Searching location...
+          </p>
+        )}
+
+        {suggestions.length > 0 && (
+          <ul
+            className="absolute top-full left-0 w-full bg-gray-900
+                       border border-gray-700 rounded-xl shadow-lg mt-2
+                       z-50 max-h-60 overflow-y-auto"
+          >
+            {suggestions.map((place) => (
+              <li
+                key={place.place_id}
+                className="p-3 hover:bg-gray-800 cursor-pointer text-sm"
+                onClick={() => handleSelect(place)}
+              >
+                {place.display_name}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default function AddTuition() {
   const { parentUser } = useContext(AuthContextParent);
@@ -66,7 +169,7 @@ export default function AddTuition() {
     if (formData.studentClass && formData.tuitionPlace) {
       setFormData((p) => ({
         ...p,
-        fee: getSuggestedFee(Number(p.studentClass), p.tuitionPlace),
+        fee:getSuggestedFee(Number(p.studentClass), p.tuitionPlace),
       }));
     }
   }, [formData.studentClass, formData.tuitionPlace]);
@@ -79,11 +182,11 @@ export default function AddTuition() {
     try {
       const { data } = await axios.post("/parent/add-tuition", formData);
       if (data.success) {
-        alert("Tuition posted successfully 🎉");
+        toast.success("Tuition posted successfully 🎉");
         navigate("/parent/my-post");
       }
-    } catch (err) {
-      alert(err.response?.data?.message || "Failed to post tuition");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to post tuition");
     }
   };
 
@@ -133,7 +236,11 @@ export default function AddTuition() {
 
         <AnimatedSection index={2} title="Location Details">
           <Grid>
-            <Input label="Area / Locality" name="location" value={formData.location} onChange={handleChange} />
+             {/* Location */}
+             <div className="relative w-full">
+             <LocationInput data={formData} setData={setFormData} />
+            </div>
+
             <Input label="Nearby Landmark" name="landmark" value={formData.landmark} onChange={handleChange} />
           </Grid>
           <Grid cols={3}>

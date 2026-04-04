@@ -71,7 +71,7 @@ const Navbar = () => {
 {/* CENTER PUBLIC LINKS */}
 <div className="hidden md:flex items-center gap-8">
 
-  <NavLink
+{!user && !parentUser &&  <NavLink
     to="/public/all-tuitions"
     className={({ isActive }) =>
       `text-sm font-medium transition p-2 m-2 rounded-2xl ${
@@ -83,11 +83,13 @@ const Navbar = () => {
   >
     All Tuitions
   </NavLink>
+   }
+ 
 
   <NavLink
     to="/study-materials"
     className={({ isActive }) =>
-      `text-sm font-medium transition p-2 m-2 rounded-2xl ${
+      `text-sm font-medium transition p-3 m-2 rounded-2xl bg-gray-900 ${
         isActive
           ? "text-white bg-violet-600"
           : "text-neutral-300 hover:text-white"
@@ -101,7 +103,7 @@ const Navbar = () => {
 
 
         {/* RIGHT ACTIONS */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center  gap-4">
 
           {!user && !parentUser && (
             <>
@@ -147,13 +149,15 @@ const Navbar = () => {
        
          {/* Avatar */}
          <motion.img
-           src={user?.profilePhoto || parentUser?.profilePhoto || "/default-avatar.png"}
+           src={user?.profilePhoto || parentUser?.profilePhoto || "/logo1.png"}
            className="
+             cursor-pointer
              w-10 h-10 rounded-full
              border border-neutral-700
-             group-hover:border-blue-400
+             group-hover:border-blue-700
              transition-all duration-300
              shadow-md group-hover:shadow-amber-500/20
+             
            "
          />
        </motion.button>
@@ -271,11 +275,11 @@ const ProfileDrawer = ({ open, onClose, user, parentUser, onLogoutTutor, onLogou
             {/* HEADER */}
             <div className="flex items-center gap-4 mb-10">
               <img
-                src={profile?.profilePhoto || "/default-avatar.png"}
+                src={profile?.profilePhoto || "/logo1.png"}
                 className="w-16 h-16 rounded-full border border-neutral-700"
               />
               <div>
-                <h3 className="font-semibold text-lg text-white">
+                <h3 className="font-semibold text-lg text-indigo-400">
                   {profile?.name || "FastTutors User"}
                 </h3>
                 <p className="text-xs text-neutral-400 capitalize">{role}</p>
@@ -316,7 +320,7 @@ const ProfileDrawer = ({ open, onClose, user, parentUser, onLogoutTutor, onLogou
               {parentUser && (
                 <button
                   onClick={onLogoutStudent}
-                  className="w-full text-amber-300 p-3 rounded-xl bg-red-600 hover:bg-red-500 transition"
+                  className="w-full text-white p-3 rounded-xl bg-red-700 hover:bg-red-600 transition"
                 >
                   Logout Parent
                 </button>

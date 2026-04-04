@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { AuthContextParent } from "../../context/AuthParent";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 function LoginStudent() {
   const { loginStudent } = useContext(AuthContextParent);
@@ -21,7 +22,7 @@ function LoginStudent() {
     if (result.success) {
       navigate("/");
     } else {
-      alert(result.message);
+      toast.error(result.message);
     }
   };
 
@@ -41,11 +42,11 @@ function LoginStudent() {
         {/* LEFT BRAND PANEL */}
         <div className="hidden md:flex flex-col justify-between p-10 bg-gradient-to-br from-gray-950/20 to-gray-900/60">
           <div>
-            <h1 className="text-4xl font-extrabold text-white tracking-wide">
+            <h1 className="text-4xl font-extrabold text-gray-400 tracking-wide">
               Fast<span className="text-indigo-600">Tutors</span>
             </h1>
 
-            <p className="mt-4 text-gray-300 text-lg">
+            <p className="mt-4 text-gray-400 text-lg">
               Learn Faster. Learn Smarter.
             </p>
           </div>
@@ -57,7 +58,7 @@ function LoginStudent() {
               and instill a love for learning.”
             </p>
 
-            <p className="text-gray-300">
+            <p className="text-green-700">
               Join thousands of students learning with verified tutors across India.
             </p>
           </div>
@@ -70,7 +71,7 @@ function LoginStudent() {
         {/* RIGHT LOGIN FORM */}
         <div className="p-10 flex flex-col justify-center">
           <h2 className="text-3xl font-extrabold text-white mb-2">
-            Welcome Back 👋
+            Welcome <span className="text-amber-700">Back </span>👋
           </h2>
 
           <p className="text-gray-300 mb-8">
@@ -134,7 +135,7 @@ function LoginStudent() {
           {/* Bottom text */}
           <p className="text-gray-400 text-sm text-center mt-8">
             New to FastTutors?{" "}
-            <span className="text-indigo-400 hover:underline cursor-pointer">
+            <span onClick={()=> navigate('/parent-register')} className="text-indigo-400 hover:underline cursor-pointer">
               Create an account
             </span>
           </p>

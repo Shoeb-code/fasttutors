@@ -19,7 +19,7 @@ export const refreshToken = async (req, res) => {
     let user;
 
     // ✅ ROLE FIX
-    if (decoded.role === "tutor") {
+    if (decoded.role ==="tutor") {
       user = await Tutor.findById(decoded.userId);
     } else if (decoded.role === "student") {
       user = await Parent.findById(decoded.userId);
@@ -42,7 +42,7 @@ export const refreshToken = async (req, res) => {
 
     // 🔁 ROTATE REFRESH TOKEN
     const newRefreshToken = jwt.sign(
-      { userId: user._id, role: decoded.role },
+      { userId: user._id, role:user.role },
       process.env.JWT_REFRESH_SECRET,
       { expiresIn: "7d" }
     );
@@ -52,7 +52,7 @@ export const refreshToken = async (req, res) => {
 
     // 🔐 NEW ACCESS TOKEN
     const newAccessToken = jwt.sign(
-      { userId: user._id, role: decoded.role },
+      { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "15m" }
     );

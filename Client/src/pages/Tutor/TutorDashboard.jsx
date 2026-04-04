@@ -10,7 +10,16 @@ import {
   GraduationCap,
   Briefcase,
   BookOpen,
-  Sparkles
+  Sparkles,
+  Phone,
+  LocateIcon,
+  LocationEdit,
+  PersonStanding,
+  BookAIcon,
+  BookIcon,
+  BookOpenCheck,
+  EqualApproximatelyIcon,
+  MailIcon
 } from "lucide-react";
 
 /* ===================================================
@@ -63,17 +72,7 @@ export default function TutorDashboard() {
 
   return(
     <div className="min-h-screen bg-black text-white flex">
-
-      {/* ===================================================
-          📊 CONTENT AREA
-      =================================================== */}
-
       <div className="flex-1 px-6 md:px-10 py-8 space-y-10">
-
-        {/* ===================================================
-            🌌 TOP NAVBAR
-        =================================================== */}
-
         <div className="
           flex justify-between items-center
           bg-white/5 backdrop-blur-xl
@@ -137,9 +136,14 @@ export default function TutorDashboard() {
                   {tutor.firstName} {tutor.lastName}
                 </h2>
 
-                <p className="text-gray-400 flex items-center gap-2 mt-1">
-                  <Sparkles size={24}/>
+                <p className="text-gray-400 text-2xl flex items-center gap-2 mt-1">
+                  <BookOpenCheck  className="text-pink-900" size={44}/>
                   {tutor.subject || "Tutor"}
+                </p>
+
+                <p className="text-gray-400  flex items-center gap-2 mt-1">
+                  <MailIcon className="text-gray-700" size={30}/>
+                  {tutor.email || "Tutor"}
                 </p>
 
               </div>
@@ -201,6 +205,23 @@ export default function TutorDashboard() {
             icon={<BookOpen className="text-blue-500" size={30}/>}
             label="Mode of Teaching"
             value={tutor.modeOfTeaching}
+          />
+
+<InfoCard
+            icon={<PersonStanding   className="text-gray-400" size={30}/>}
+            label="Student I teach"
+            value={tutor.studentYouTeach}
+          />
+
+          <InfoCard
+            icon={<LocationEdit className="text-green-500" size={30}/>}
+            label="City I lived "
+            value={tutor.city}
+          />
+          <InfoCard
+            icon={<Phone className="text-red-500" size={30}/>}
+            label="My Mobile"
+            value={tutor.mobile}
           />
 
         </div>

@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import { AuthProvider } from "./context/AuthContextTutor.jsx";
 import { AuthParent } from "./context/AuthParent.jsx";
 import { Toaster } from "react-hot-toast";
-import { LoadScript } from "@react-google-maps/api";
+
+
+
 
 /* ================= AUTH INIT ================= */
 import useAuthInit from "./hooks/useAuthInit.js";

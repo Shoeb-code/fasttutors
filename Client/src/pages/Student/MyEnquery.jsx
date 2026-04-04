@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { pageMotion, cardMotion, hoverScale } from "../../ui/motion";
 import { colors } from "../../ui/colors";
+import toast from "react-hot-toast";
 
 function MyEnquery() {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ function MyEnquery() {
         setEditId(null);
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 
@@ -75,7 +76,7 @@ function MyEnquery() {
         setMyEnquiries((p) => p.filter((e) => e._id !== id));
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 

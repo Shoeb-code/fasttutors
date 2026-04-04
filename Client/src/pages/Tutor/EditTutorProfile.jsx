@@ -132,8 +132,8 @@ function EditTutorProfile() {
       >
         {/* HEADER */}
         <div className="mb-14">
-          <h1 className="text-4xl font-extrabold bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
-            Edit Tutor Profile
+          <h1 className="text-4xl font-extrabold bg-gradient-to-r from-gray-400  bg-clip-text text-transparent">
+            Edit <span className="text-amber-900">Tutor-Profile</span>
           </h1>
           <p className="text-neutral-400 mt-2">
             A complete profile attracts more parents & better leads
@@ -145,10 +145,10 @@ function EditTutorProfile() {
           <img
             src={preview || "/default-avatar.png"}
             alt="Profile"
-            className="w-36 h-36 rounded-full object-cover border-4 border-amber-400/60 mb-4"
+            className="w-36 h-36 rounded-full object-cover border-4 border-indigo-700/60 mb-4"
           />
 
-          <label className="text-sm text-amber-400 cursor-pointer mb-3">
+          <label className="text-sm text-blue-400 cursor-pointer mb-3">
             Change profile photo
             <input
               type="file"
@@ -161,7 +161,7 @@ function EditTutorProfile() {
           <motion.button
             onClick={handleUpload}
             disabled={uploading}
-            className="px-6 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-semibold"
+            className="px-6 py-2 rounded-xl bg-gradient-to-r from-green-700 to-orange-500 text-white font-semibold"
           >
             {uploading ? "Uploading..." : "Update Photo"}
           </motion.button>
@@ -170,7 +170,7 @@ function EditTutorProfile() {
         {/* FORM */}
         <motion.div className="rounded-3xl bg-white/5 p-10 border border-white/10">
           <form onSubmit={handleSubmit} className="space-y-16">
-            <Section title="Personal Information">
+            <Section  title="Personal Information">
               <TwoCol>
                 <Input label="First Name" name="firstName" value={editForm.firstName} onChange={handleChange} />
                 <Input label="Last Name" name="lastName" value={editForm.lastName} onChange={handleChange} />
@@ -194,7 +194,7 @@ function EditTutorProfile() {
                 value={editForm.aboutTutor}
                 onChange={handleChange}
                 rows={6}
-                className="w-full rounded-2xl px-5 py-4 bg-neutral-800 border border-neutral-700 text-white"
+                className="w-full rounded-2xl px-5 py-4 bg-neutral-800 border border-neutral-700 text-gray-300"
               />
               <p className={`text-sm ${isBioValid ? "text-green-400" : "text-red-400"}`}>
                 {wordCount}/50 words minimum

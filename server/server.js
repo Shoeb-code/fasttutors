@@ -82,7 +82,7 @@ app.use("/api/admin", adminRoutes);
 app.use('/api/student',studentRouter)
 
 /* ================= public ================= */
- app.use('/api/',publicRoute)
+ app.use('/api',publicRoute)
 
 /* ================= DB ================= */
 
